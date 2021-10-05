@@ -1,0 +1,50 @@
+html{
+    height:100%;
+}
+body{
+     background-image: linear-gradient(to bottom, #e5edf5, #d3e4f4, #c1daf4, #aed1f3, #9ac8f2);
+     background-repeat: no-repeat;
+     height: 100%;
+}
+.login{
+    margin : auto;
+    margin-top :300px;
+    height : 300px;
+    width : 400px;
+
+    }
+
+.welcome{
+    height:200px;
+    padding-top:50px;
+    text-align : center;
+    color: #ffffff;
+    background-color:#1d3557;
+}
+.navbar{
+    background-color:#1d3557;
+}
+.navbar-brand{
+ color: #FFFFFF;
+}
+.navbar li a {
+    color: #FFFFFF;
+
+}
+
+.navbar-brand:hover {
+     color: white;
+}
+.navbar-nav{
+    float:right;
+}
+
+.requestForm{
+    position: absolute;
+    margin-top: 100px;
+    width: 600px;
+    right: 250px;
+}
+.custombtn{
+    width: 100%;
+}
