@@ -1,10 +1,12 @@
-html{
-    height:100%;
+html, body {
+  height: auto;
 }
 body{
      background-image: linear-gradient(to bottom, #e5edf5, #d3e4f4, #c1daf4, #aed1f3, #9ac8f2);
-     background-repeat: no-repeat;
-     height: 100%;
+
+}
+div>h2{
+    text-align:center;
 }
 .login{
     margin : auto;
@@ -38,13 +40,16 @@ body{
 .navbar-nav{
     float:right;
 }
-
-.requestForm{
-    position: absolute;
-    margin-top: 100px;
-    width: 600px;
-    right: 250px;
+.space{
+padding-right:20px;
 }
+
 .custombtn{
     width: 100%;
+}
+.displayForm{
+    display:none;
+}
+.approveBtn{
+    display:none;
 }

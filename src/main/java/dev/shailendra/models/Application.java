@@ -1,10 +1,16 @@
 package dev.shailendra.models;
 
+
+
+
+import com.fasterxml.jackson.annotation.JsonFormat;
+import org.hibernate.type.TimeType;
+
 import javax.persistence.*;
-
-
-import java.sql.Time;
 import java.sql.Date;
+import java.sql.Time;
+
+
 @Entity
 @Table(name = "reimapplication")
 public class Application {
@@ -14,26 +20,17 @@ public class Application {
     @Column(name = "appid")
     private Integer id;
 
-     @Column(name ="eventype")
-    private String eventType;
+    private String eventype;
     private String description;
-    private double fees;
-
-    @Column(name = "appdate")
-    private Date date;
-
-
-    @Column(name = "apptime")
-    private Time time;
-
-    @Column(name = "applocation")
-    private String location;
-
-    @Column(name = "appjustification")
-    private String justification;
-    private boolean supervisor;
-    private boolean manager;
-    private boolean benco;
+    private Integer fees;
+    private String grade;
+    private String appdate;
+    private String apptime;
+    private String applocation;
+    private String appjustification;
+    private String supervisor;
+    private String manager;
+    private String benco;
 
     @ManyToOne
     @JoinColumn(name = "empid")
@@ -42,29 +39,50 @@ public class Application {
     public Application() {
     }
 
-    public Application(String eventType, String description, double fees, Date date, Time time, String location, String justification, boolean supervisor, boolean manager, boolean benco, User user) {
-        this.eventType = eventType;
+    public Application(Integer id, String supervisor, String manager, String benco) {
+        this.id = id;
+        this.supervisor = supervisor;
+        this.manager = manager;
+        this.benco = benco;
+    }
+
+    public Application(String eventype, String description, Integer fees, String grade, String appdate, String apptime, String applocation, String appjustification, User user) {
+        this.eventype = eventype;
         this.description = description;
         this.fees = fees;
-        this.date = date;
-        this.time = time;
-        this.location = location;
-        this.justification = justification;
+        this.grade = grade;
+        this.appdate = appdate;
+        this.apptime = apptime;
+        this.applocation = applocation;
+        this.appjustification = appjustification;
+        this.user = user;
+    }
+
+    public Application(String eventype, String description, Integer fees, String grade, String appdate, String apptime, String applocation, String appjustification, String supervisor, String manager, String benco, User user) {
+        this.eventype = eventype;
+        this.description = description;
+        this.fees = fees;
+        this.grade = grade;
+        this.appdate = appdate;
+        this.apptime = apptime;
+        this.applocation = applocation;
+        this.appjustification = appjustification;
         this.supervisor = supervisor;
         this.manager = manager;
         this.benco = benco;
         this.user = user;
     }
 
-    public Application(Integer id, String eventType, String description, double fees, Date date, Time time, String location, String justification, boolean supervisor, boolean manager, boolean benco, User user) {
+    public Application(Integer id, String eventype, String description, Integer fees, String grade, String appdate, String apptime, String applocation, String appjustification, String supervisor, String manager, String benco, User user) {
         this.id = id;
-        this.eventType = eventType;
+        this.eventype = eventype;
         this.description = description;
         this.fees = fees;
-        this.date = date;
-        this.time = time;
-        this.location = location;
-        this.justification = justification;
+        this.grade = grade;
+        this.appdate = appdate;
+        this.apptime = apptime;
+        this.applocation = applocation;
+        this.appjustification = appjustification;
         this.supervisor = supervisor;
         this.manager = manager;
         this.benco = benco;
@@ -79,12 +97,12 @@ public class Application {
         this.id = id;
     }
 
-    public String getEventType() {
-        return eventType;
+    public String getEventype() {
+        return eventype;
     }
 
-    public void setEventType(String eventType) {
-        this.eventType = eventType;
+    public void setEventype(String eventype) {
+        this.eventype = eventype;
     }
 
     public String getDescription() {
@@ -95,67 +113,75 @@ public class Application {
         this.description = description;
     }
 
-    public double getFees() {
+    public Integer getFees() {
         return fees;
     }
 
-    public void setFees(double fees) {
+    public void setFees(Integer fees) {
         this.fees = fees;
     }
 
-    public Date getDate() {
-        return date;
+    public String getGrade() {
+        return grade;
     }
 
-    public void setDate(Date date) {
-        this.date = date;
+    public void setGrade(String grade) {
+        this.grade = grade;
     }
 
-    public Time getTime() {
-        return time;
+    public String getAppdate() {
+        return appdate;
     }
 
-    public void setTime(Time time) {
-        this.time = time;
+    public void setAppdate(String appdate) {
+        this.appdate = appdate;
     }
 
-    public String getLocation() {
-        return location;
+    public String getApptime() {
+        return apptime;
     }
 
-    public void setLocation(String location) {
-        this.location = location;
+    public void setApptime(String apptime) {
+        this.apptime = apptime;
     }
 
-    public String getJustification() {
-        return justification;
+    public String getApplocation() {
+        return applocation;
     }
 
-    public void setJustification(String justification) {
-        this.justification = justification;
+    public void setApplocation(String applocation) {
+        this.applocation = applocation;
     }
 
-    public boolean isSupervisor() {
+    public String getAppjustification() {
+        return appjustification;
+    }
+
+    public void setAppjustification(String appjustification) {
+        this.appjustification = appjustification;
+    }
+
+    public String getSupervisor() {
         return supervisor;
     }
 
-    public void setSupervisor(boolean supervisor) {
+    public void setSupervisor(String supervisor) {
         this.supervisor = supervisor;
     }
 
-    public boolean isManager() {
+    public String getManager() {
         return manager;
     }
 
-    public void setManager(boolean manager) {
+    public void setManager(String manager) {
         this.manager = manager;
     }
 
-    public boolean isBenco() {
+    public String getBenco() {
         return benco;
     }
 
-    public void setBenco(boolean benco) {
+    public void setBenco(String benco) {
         this.benco = benco;
     }
 
@@ -171,16 +197,17 @@ public class Application {
     public String toString() {
         return "Application{" +
                 "id=" + id +
-                ", eventType='" + eventType + '\'' +
+                ", eventype='" + eventype + '\'' +
                 ", description='" + description + '\'' +
                 ", fees=" + fees +
-                ", date=" + date +
-                ", time=" + time +
-                ", location='" + location + '\'' +
-                ", justification='" + justification + '\'' +
-                ", supervisor=" + supervisor +
-                ", manager=" + manager +
-                ", benco=" + benco +
+                ", grade='" + grade + '\'' +
+                ", appdate=" + appdate +
+                ", apptime=" + apptime +
+                ", applocation='" + applocation + '\'' +
+                ", appjustification='" + appjustification + '\'' +
+                ", supervisor='" + supervisor + '\'' +
+                ", manager='" + manager + '\'' +
+                ", benco='" + benco + '\'' +
                 ", user=" + user +
                 '}';
     }

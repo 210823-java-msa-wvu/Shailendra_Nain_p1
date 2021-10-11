@@ -9,14 +9,9 @@ import java.util.List;
 public class UserServices {
     UserRepo userRepo = new UserHibernate();
     public boolean login(String email, String password) {
-        // in order to log in a user, we will need username and password
-        // that information is stored in our database
-        // the repository layer needs to take care of this
-        User u = userRepo.getByEmail(email); // more of the Sole Responsibility Principle at work
-        // check to make sure User object is not null
+        User u = userRepo.getByEmail(email);
         if (u != null) {
-            // now check to make sure it matches
-            if (email.equals(u.getEmail()) && password.equals(u.getUserPass())) {
+           if (email.equals(u.getEmail()) && password.equals(u.getUserPass())) {
                 return true;
             }
         }

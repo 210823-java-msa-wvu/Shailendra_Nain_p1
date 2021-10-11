@@ -29,6 +29,7 @@ public class RequestHandler {
         controllerMap.put("user", new UserController());
         controllerMap.put("application", new ApplicationController());
         controllerMap.put("logout", new LogoutController());
+        controllerMap.put("account", new AccountBalanceController());
 
     }
 

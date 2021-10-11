@@ -1,7 +1,5 @@
 package dev.shailendra.controllers;
 
-
-
 import com.fasterxml.jackson.databind.ObjectMapper;
 import dev.shailendra.services.UserServices;
 import org.apache.logging.log4j.LogManager;
@@ -36,8 +34,11 @@ public class LoginController implements FrontController {
         } else if (us.login(email, password)) {
             session = request.getSession();
             session.setAttribute("email", email);
-            response.sendRedirect("static/application.html");
-
+            if(us.getUser(email).getJobTitle().equals("manager") || us.getUser(email).getJobTitle().equals("supervisor") || us.getUser(email).getJobTitle().equals("benco")){
+                response.sendRedirect("static/admin.html");
+            }else{
+                response.sendRedirect("static/application.html");
+            }
         }else{
             response.setContentType("text/html");
             response.getWriter().write(om.writeValueAsString("<H1>Invalid Credentials!</H1>" +

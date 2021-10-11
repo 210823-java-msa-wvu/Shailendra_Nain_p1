@@ -2,14 +2,14 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Welcome Employee Name</title>
+    <title id="welcome">Welcome Employee Name</title>
     <link href="./css/style.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha1/js/bootstrap.min.js" integrity="sha384-oesi62hOLfzrys4LxRF63OJCXdXDipiYWBnvTl9Y9/TRlw5xlKIEHpNyvvDShgf/" crossorigin="anonymous"></script>
 </head>
 <!--onload="getInfo()"-->
-<body onload = "getUser()" >
+<body onload="getUser()">
 <nav class="navbar navbar-expand-lg">
     <div class="container-fluid">
         <span class="navbar-brand">TRMS</span>
@@ -21,69 +21,112 @@
         </div>
 </nav>
 
-<!--End of Navbar-->
-<div class="container-fluid">
-    <div class="shadow p-3 mb-5 bg-white rounded requestForm">
-        <form action="" method="POST">
-            <div class="mb-3">
-                <div class="input-group">
-                    <span class="input-group-text">First and last name</span>
-                    <input type="text" id="firstname" aria-label="First name" name="firstname" class="form-control" disabled>
-                    <input type="text" id="lastname"  aria-label="Last name" name="lastname"  class="form-control" disabled>
-                </div>
-                <br>
-                <select class="form-select" id="eventtype" aria-label="Default select example" name="eventType">
-                    <option selected>Select Event</option>
-                    <option value="University Courses">University Courses</option>
-                    <option value="Seminar">Seminar</option>
-                    <option value="Certificaiton Preparation Classes">Certification Preparation Classes</option>
-                    <option value="Certification">Certification</option>
-                    <option value="Technical Training">Technical Training</option>
-                    <option value="Others">Others</option>
-                </select>
-                <br>
-                <div class="input-group">
-                    <span class="input-group-text">Description</span>
-                    <textarea class="form-control" id="description" name="description" aria-label="With textarea"></textarea>
-                </div>
-                <br>
-                <div class="input-group">
-                    <span class="input-group-text">$</span>
-                    <span class="input-group-text">0.00</span>
-                    <input type="text" id="fees" class="form-control" name="fees" aria-label="Dollar amount (with dot and two decimal places)">
-
-                </div>
-                <br>
-                <div class="input-group">
-                    <span class="input-group-text">Grade</span>
-                    <input type="text" id="grade" name="grade" class="form-control">
-                </div>
-                <br>
-                <div class="input-group">
-                <span class="input-group-text">Date</span>
-                <input type="date" id="date" class="form-control" name="date">
-                <span class="input-group-text">Time</span>
-                <input type="time" id="time" class="form-control" name="time">
-                </div>
-                <br>
-                <div class="input-group">
-                    <span class="input-group-text">Location</span>
-                    <input type="text" id="location" name="location" class="form-control">
-                </div>
-                <br>
-                <div class="input-group">
-                    <span class="input-group-text">Justification</span>
-                    <textarea class="form-control" id="justification" name="justification" aria-label="With textarea"></textarea>
-                </div>
-
+<div class="container mt-4">
+    <div class="row align-items-start gx-5">
+        <div class="col-5 form-group shadow p-3 mb-5 bg-white rounded mx-2" >
+            <form action="/home/application" class="displayForm" method="POST" id="applicationForm">
+             <h2 class="display-6">Create New Reimbursement Form </h2>
+            <div class="input-group mb-3">
+                <span class="input-group-text">User:</span>
+                <input type="text" class="form-control" id="firstname" aria-describedby="basic-addon1" disabled>
+                <input type="text" class="form-control" id="lastname" aria-describedby="basic-addon1" disabled>
             </div>
-<!--            <a href="/home/logout" class="nav-link" >Logout</a>-->
-            <button type="submit" class="btn btn-primary custombtn" onclick="getUsers()" value="Log In">Submit Request</button>
-        </form>
-    </div>
-    <div class="modal"> Contents... </div>
-</div>
+            <div class="input-group mb-3">
+                <span class="input-group-text">Event Type:</span>
+                          <select class="form-control" id="eventType">
+                            <option selected value="">Event Type</option>
+                            <option value="UniversityCourses">University Courses</option>
+                            <option value="Seminars">Seminars</option>
+                            <option value="CertificationPrep">Certification Preparation Classes</option>
+                            <option value="Certification">Certification</option>
+                            <option value="TechnicalTraining">Technical Training</option>
+                            <option value="Other">Other</option>
+                </select>
+            </div>
+            <div class="input-group mb-3">
+                <span class="input-group-text">Description:</span>
+                <input type="text" class="form-control" id="description" placeholder="Descritpion" required>
+            </div>
 
-<script src="./js/user.js"></script>
+
+            <div class="input-group mb-3">
+                <span class="input-group-text">Fees:</span>
+                <input type="number" class="form-control" id="fees" placeholder="$00.00" required>
+            </div>
+
+
+            <div class="input-group mb-3">
+                <span class="input-group-text">Grade:</span>
+                <input type="text" class="form-control" id="grade" placeholder="A/100" required>
+            </div>
+
+
+            <div class="input-group mb-3">
+                <span class="input-group-text">Date:</span>
+                <input type="text" class="form-control" id="appdate" placeholder="MM/DD/YYYY" required>
+            </div>
+
+
+            <div class="input-group mb-3">
+                <span class="input-group-text">Time:</span>
+                <input type="text" class="form-control" id="apptime" placeholder="00:00" required>
+            </div>
+
+
+            <div class="input-group mb-3">
+                <span class="input-group-text">Location:</span>
+                <input type="text" class="form-control" id="applocation" placeholder="Location" required>
+            </div>
+
+
+            <div class="input-group mb-3">
+                <span class="input-group-text">Justification:</span>
+                <input type="text" class="form-control" id="appjustification" placeholder="Justification" required>
+            </div>
+
+
+            <div class="input-group mb-3">
+            <button id="submitBtn" onclick="addForm()" type="button" class="btn btn-primary custombtn">Submit</button>
+            </div>
+
+    </form>
+            <div class="input-group mb-3">
+                <button onclick="showForm()" type="submit" class="btn btn-primary custombtn" id="btn-hide">Apply for Reimbursement</button>
+            </div>
+    </div>
+        <div class="col-6 form-group shadow p-3 mb-5 bg-white rounded mx-2" >
+            <h4 class="display-6">User Balance </h4>
+            <p id="showBalance">Current Balance: $1000</p>
+        </div>
+        <div class="row shadow p-3 mb-5 bg-white rounded mx-2">
+            <div class="row input-group mb-3">
+                <h2 class="display-6">User Application </h2>
+                <div class="input-group mb-3 row">
+                    <table class="table table-bordered">
+                        <thead>
+                        <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">Event Type</th>
+                            <th scope="col">Description</th>
+                            <th scope="col">Fees</th>
+                            <th scope="col">Grade</th>
+                            <th scope="col">Date</th>
+                            <th scope="col">Time</th>
+                            <th scope="col">Location</th>
+                            <th scope="col">Justificaiton</th>
+                            <th scope="col">Application Status</th>
+                        </tr>
+                        </thead>
+                        <tbody id="showdata">
+                        </tbody>
+                    </table>
+                    <button type="button" onclick="getUserApplication()" class="btn btn-primary" id="hideButton">Check Details</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="./js/application.js"></script>
+
 </body>
 </html>
