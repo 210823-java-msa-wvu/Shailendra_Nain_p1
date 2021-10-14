@@ -28,8 +28,4 @@ public class UserServices {
 
     }
 
-    public void defaultBalance(){
-
-    }
-
 }

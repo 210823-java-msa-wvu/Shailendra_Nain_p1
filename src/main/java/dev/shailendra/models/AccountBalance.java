@@ -3,43 +3,37 @@ package dev.shailendra.models;
 import javax.persistence.*;
 
 @Entity
-@Table(name="benefitsbalance")
+@Table(name="useraccount")
 public class AccountBalance {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "bid")
     private Integer id;
 
     @OneToOne
     @JoinColumn(name = "empid")
     private User user;
 
-    @Column(name = "bamount")
-    private double blanceAmount;
-
-    @Column(name="awamount")
-    private double awardedAmount;
-
-    @Column(name="penamount")
-    private double pendingAmount;
+    private Integer amount;
+    private Integer awarded;
+    private Integer pending;
 
     public AccountBalance() {
     }
 
-    public AccountBalance(User user, double blanceAmount, double awardedAmount, double pendingAmount) {
+    public AccountBalance(User user, Integer amount, Integer awarded, Integer pending) {
         this.user = user;
-        this.blanceAmount = blanceAmount;
-        this.awardedAmount = awardedAmount;
-        this.pendingAmount = pendingAmount;
+        this.amount = amount;
+        this.awarded = awarded;
+        this.pending = pending;
     }
 
-    public AccountBalance(Integer id, User user, double blanceAmount, double awardedAmount, double pendingAmount) {
+    public AccountBalance(Integer id, User user, Integer amount, Integer awarded, Integer pending) {
         this.id = id;
         this.user = user;
-        this.blanceAmount = blanceAmount;
-        this.awardedAmount = awardedAmount;
-        this.pendingAmount = pendingAmount;
+        this.amount = amount;
+        this.awarded = awarded;
+        this.pending = pending;
     }
 
     public Integer getId() {
@@ -58,28 +52,28 @@ public class AccountBalance {
         this.user = user;
     }
 
-    public double getBlanceAmount() {
-        return blanceAmount;
+    public Integer getAmount() {
+        return amount;
     }
 
-    public void setBlanceAmount(double blanceAmount) {
-        this.blanceAmount = blanceAmount;
+    public void setAmount(Integer amount) {
+        this.amount = amount;
     }
 
-    public double getAwardedAmount() {
-        return awardedAmount;
+    public Integer getAwarded() {
+        return awarded;
     }
 
-    public void setAwardedAmount(double awardedAmount) {
-        this.awardedAmount = awardedAmount;
+    public void setAwarded(Integer awarded) {
+        this.awarded = awarded;
     }
 
-    public double getPendingAmount() {
-        return pendingAmount;
+    public Integer getPending() {
+        return pending;
     }
 
-    public void setPendingAmount(double pendingAmount) {
-        this.pendingAmount = pendingAmount;
+    public void setPending(Integer pending) {
+        this.pending = pending;
     }
 
     @Override
@@ -87,9 +81,9 @@ public class AccountBalance {
         return "AccountBalance{" +
                 "id=" + id +
                 ", user=" + user +
-                ", blanceAmount=" + blanceAmount +
-                ", awardedAmount=" + awardedAmount +
-                ", pendingAmount=" + pendingAmount +
+                ", amount=" + amount +
+                ", awarded=" + awarded +
+                ", pending=" + pending +
                 '}';
     }
 }

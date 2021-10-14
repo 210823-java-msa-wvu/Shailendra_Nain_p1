@@ -10,7 +10,10 @@ public class ApplicationServices {
     ApplicationRepo applicationRepo = new ApplicationHibernate();
 
     public Application createApplication(Application a) {
-        return applicationRepo.add(a);
+        Application ap = a;
+        if(ap.)
+//        return applicationRepo.add(a);
+        return ap;
     }
 
     public Application searchApplicationById(Integer id) {
@@ -22,6 +25,7 @@ public class ApplicationServices {
     }
 
     public void updateApplication(Application a) {
+
         applicationRepo.update(a);
     }
 

@@ -5,6 +5,8 @@ async function addForm(){
     let eventType = document.getElementById("eventType").value;
     let description = document.getElementById("description").value;
     let fees = document.getElementById("fees").value;
+    fees = reimbursementCoverage(eventType, fees);
+    console.log(fees);
     let grade = document.getElementById("grade").value;
     let appdate = document.getElementById("appdate").value;
     let apptime = document.getElementById("apptime").value;
@@ -51,6 +53,27 @@ async function addForm(){
         console.log(error);
     });
 
+}
+function reimbursementCoverage(eventType, fees){
+    if(eventType === "UniversityCourses"){
+        amount = (fees  * 80)/100;
+        return amount;
+    }else if(eventType === "Seminars"){
+        amount = (fees  * 60)/100;
+        return amount;
+    }else if(eventType === "CertificationPrep"){
+         amount = (fees  * 75)/100;
+           return amount;
+    }else if(eventType === "Certification"){
+          amount = (fees  * 100)/100;
+            return amount;
+    }else if(eventType === "TechnicalTraining"){
+       amount = (fees  * 90)/100;
+        return amount;
+    }else if(eventType === "Other"){
+        amount = (fees  * 30)/100;
+            return amount;
+    }
 }
 function reset(){
     document.getElementById("eventType").value ='Event Type';
@@ -248,16 +271,18 @@ function idDropDown(){
         }
 }
 async function approval(){
-    let url = 'http://localhost:8080/home/user';
+        let url = 'http://localhost:8080/home/user';
         let appurl = 'http://localhost:8080/home/application';
-        let appid = document.getElementById('approvalId').value;
+
+        let appid = document.getElementById('approvalId').valueAsNumber;
         let status = document.getElementById('appStatusUpdate').value;
         let res = await fetch(url)
         let data = await res.json()
+
         let resp = await fetch(appurl)
         let appdata = await resp.json()
         console.log(appid, status);
-        let appform;
+        var appform;
         let indexArray = [];
 
         for(dat of appdata){
@@ -274,83 +299,107 @@ async function approval(){
                 indexArray[9] =dat.supervisor;
                 indexArray[10] =dat.manager;
                 indexArray[11] =dat.benco;
+                indexArray[12] =dat.user.id;
                 }
         }
+        let event = indexArray[1];
+        let desc = indexArray[2];
+        let fee = indexArray[3];
+        let gr = indexArray[4];
+        let date = indexArray[5];
+        let time = indexArray[6];
+        let loc = indexArray[7];
+        let just  = indexArray[8];
+        let sup = indexArray[9];
+        let man = indexArray[10];
+        let ben = indexArray[11];
+        let userid = indexArray[12];
 
-         if(data.jobTitle == "supervisor"){
-                appform = {
-                      "id": parseInt(appid),
-                     "eventype": indexArray[1],
-                     "description": indexArray[2],
-                     "fees": indexArray[3],
-                     "grade": indexArray[4],
-                      "appdate": indexArray[5],
-                       "apptime": indexArray[6],
-                       "applocation": indexArray[7],
-                       "appjustification": indexArray[8],
-                        "supervisor": status,
-                        "manager": indexArray[10],
-                        "benco": indexArray[11],
-                        "user": {
-                         "id" : data.id
-                         }
-                }
-
-
+         if(data.jobTitle === 'supervisor'){
+               appform = {
+               "id": appid,
+                "eventype": event,
+               "description": desc,
+               "fees": fee,
+               "grade": gr,
+               "appdate": date,
+               "apptime": time,
+               "applocation": loc,
+               "appjustification": just,
+               "supervisor": status,
+               "manager": man,
+               "benco": ben,
+               "user": {
+                   "id": userid
+                       }
                  }
-                else if(data.jobTitle == "manager"){
+               } else if(data.jobTitle === 'manager'){
              appform = {
-            "id": parseInt(appid),
-            "eventype": indexArray[1],
-             "description": indexArray[2],
-             "fees": indexArray[3],
-             "grade": indexArray[4],
-              "appdate": indexArray[5],
-               "apptime": indexArray[6],
-               "applocation": indexArray[7],
-               "appjustification": indexArray[8],
-                "supervisor": indexArray[9],
-                "manager": status,
-                "benco": indexArray[11],
-            "user": {
-                "id" : data.id
-            }                                 }
-                 }else if(data.jobTitle == "benco"){
-                            appform = {
-                            "id": parseInt(appid),
-                            "eventype": indexArray[1],
-                              "description": indexArray[2],
-                              "fees": indexArray[3],
-                              "grade": indexArray[4],
-                               "appdate": indexArray[5],
-                                "apptime": indexArray[6],
-                                "applocation": indexArray[7],
-                                "appjustification": indexArray[8],
-                                 "supervisor": indexArray[9],
-                                 "manager": indexArray[10],
-                                 "benco": status,
+                 "id": appid,
+                  "eventype": event,
+                 "description": desc,
+                 "fees": fee,
+                 "grade": gr,
+                 "appdate": date,
+                 "apptime": time,
+                 "applocation": loc,
+                 "appjustification": just,
+                 "supervisor": sup,
+                 "manager": status,
+                 "benco": ben,
                  "user": {
-                     "id" : data.id
-                             }
+                     "id": userid
 
+                         }
+            }
+                 }else if(data.jobTitle == 'benco'){
+                            appform = {
+                             "id": appid,
+                             "eventype": event,
+                            "description": desc,
+                            "fees": fee,
+                            "grade": gr,
+                            "appdate": date,
+                            "apptime": time,
+                            "applocation": loc,
+                            "appjustification": just,
+                            "supervisor": sup,
+                            "manager": man,
+                            "benco": status,
+                            "user": {
+                                "id": userid
 
-     }
-}
+                                    }
+                            }
+                    }
 
     console.log(appform);
-    let respp = await fetch(appurl, {
-            method: "PUT",
-            headers: {"Content-Type": "application/json"},
-            body: JSON.stringify(appform)
-        });
-
-        let resJson = await respp.json()
-        .then(resJson => {
-            console.log(appform);
+    let response = await fetch(`${appurl}/${appid}`, {
+            method: 'PUT',
+            body: JSON.stringify(appform),
+            headers: {
+                'Content-Type': 'application/json'
+            }
         })
-        .catch(error => {
+//        let resJson = await response.
+        .then((response) => {
+            console.log(response);
+        }).catch((error) => {
             console.log(error);
         });
-
 }
 
+async function userAccount(){
+    let appUrl = 'http://localhost:8080/home/application';
+    let acUrl = 'http://localhost:8080/home/account';
+    let balance = document.getElementById('showBalance');
+    let appRes = await fetch(appUrl)
+    let appData = await appRes.json()
+
+    let acRes = await fetch(acUrl)
+    let acData = await acRes.json()
+    balance.innerHTML = `Current Balance:$${acData[0].amount}`;
+    console.log(acData[0].amount);
+//    console.log(appData, acData);
+    console.log(appData[0].user.email);
+}

@@ -17,9 +17,7 @@ public class ApplicationController implements FrontController {
 
     @Override
     public void process(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
-//        HttpSession session = request.getSession();
-//        String email = (String) session.getAttribute("email");
-//        if(email != null){
+
             String path = (String) request.getAttribute("path");
             System.out.println("Path attribute: " + path);
 
@@ -53,13 +51,11 @@ public class ApplicationController implements FrontController {
 
 
             } else {
-
                 int applicationId = Integer.parseInt(path);
-
+                Application a = null;
                 switch (request.getMethod()) {
-
                     case "GET": {
-                        Application a = applicationServices.searchApplicationById(applicationId);
+                        a = applicationServices.searchApplicationById(applicationId);
                         if (a != null) {
                             response.getWriter().write(om.writeValueAsString(a));
                         } else {
@@ -67,9 +63,9 @@ public class ApplicationController implements FrontController {
                         }
                         break;
                     }
-
                     case "PUT": {
-                        Application a = om.readValue(request.getReader(), Application.class);
+                        System.out.println("System updating an existing application....");
+                        a = om.readValue(request.getReader(), Application.class);
                         applicationServices.updateApplication(a);
                         response.setStatus(HttpServletResponse.SC_NO_CONTENT);
                         // 204 - server doesn't have any content to send back, but the request was successful
@@ -88,9 +84,5 @@ public class ApplicationController implements FrontController {
                     }
                 }
             }
-//        }else{
-//            session.invalidate();
-//            response.sendRedirect("static/index.html");
-//        }
     }
 }

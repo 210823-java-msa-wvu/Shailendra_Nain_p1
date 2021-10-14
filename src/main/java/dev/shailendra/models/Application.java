@@ -39,13 +39,6 @@ public class Application {
     public Application() {
     }
 
-    public Application(Integer id, String supervisor, String manager, String benco) {
-        this.id = id;
-        this.supervisor = supervisor;
-        this.manager = manager;
-        this.benco = benco;
-    }
-
     public Application(String eventype, String description, Integer fees, String grade, String appdate, String apptime, String applocation, String appjustification, User user) {
         this.eventype = eventype;
         this.description = description;

@@ -8,6 +8,7 @@ import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.query.Query;
 
+import javax.persistence.NoResultException;
 import java.util.List;
 
 public class ApplicationHibernate implements ApplicationRepo {
@@ -32,7 +33,18 @@ public class ApplicationHibernate implements ApplicationRepo {
 
     @Override
     public Application getById(Integer id) {
-        return null;
+        Application a;
+        try(Session s = HibernateUtil.getSession()){
+            String query = "from Application where id = :id";
+            Query<Application> applicationQuery = s.createQuery(query, Application.class);
+            applicationQuery.setParameter("id", id);
+            a = applicationQuery.getSingleResult();
+            System.out.println("Getting application by Id" + a);
+        }catch (NoResultException nre){
+            nre.printStackTrace();
+            return null;
+        }
+        return a;
     }
 
     @Override
