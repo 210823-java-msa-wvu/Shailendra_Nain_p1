@@ -70,16 +70,18 @@ public class AccountBalanceHibernate implements AccountBalanceRepo {
 
     @Override
     public void update(AccountBalance accountBalance) {
+        Session s = HibernateUtil.getSession();
         Transaction tx = null;
-        try(Session s = HibernateUtil.getSession()){
+        try{
             tx = s.beginTransaction();
             s.update(accountBalance);
             tx.commit();
-        }catch(HibernateException e){
-            e.printStackTrace();
+        } catch(Exception e){
             if(tx != null){
                 tx.rollback();
             }
+        }finally {
+            s.close();
         }
     }
 

@@ -10,10 +10,9 @@ public class ApplicationServices {
     ApplicationRepo applicationRepo = new ApplicationHibernate();
 
     public Application createApplication(Application a) {
-        Application ap = a;
-        if(ap.)
-//        return applicationRepo.add(a);
-        return ap;
+
+     return applicationRepo.add(a);
+
     }
 
     public Application searchApplicationById(Integer id) {

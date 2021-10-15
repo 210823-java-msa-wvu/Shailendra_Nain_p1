@@ -4,6 +4,7 @@ package dev.shailendra.models;
 
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import org.hibernate.action.internal.OrphanRemovalAction;
 import org.hibernate.type.TimeType;
 
 import javax.persistence.*;
@@ -32,7 +33,7 @@ public class Application {
     private String manager;
     private String benco;
 
-    @ManyToOne
+    @ManyToOne()
     @JoinColumn(name = "empid")
     private User user;
 

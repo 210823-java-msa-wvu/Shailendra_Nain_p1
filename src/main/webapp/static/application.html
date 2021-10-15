@@ -96,8 +96,18 @@
     </div>
         <div class="col-6 form-group shadow p-3 mb-5 bg-white rounded mx-2" >
             <h4 class="display-6">User Balance </h4>
+            <form action="/home/account" method="PUT">
             <p id="showBalance"></p>
-            <button type="button" onclick="userAccount()" class="btn btn-primary">Check Acccount Balance</button>
+                <button type="button" onclick="userAccount()" class="btn btn-primary">Check Acccount Balance</button>
+            </form>
+        </div>
+        <div class="col-6 form-group shadow p-3 mb-5 bg-white rounded mx-2" >
+            <h4 class="display-6">Cancel Application</h4>
+            <form action="/home/application" method="DELETE" id="delete">
+
+                <input type="number" class="form-control" id="cancelNumber" placeholder="Application NO" >
+                <button type="button" onclick="cancelRequest()" class="btn btn-primary">Cancel Request</button>
+            </form>
         </div>
         <div class="row shadow p-3 mb-5 bg-white rounded mx-2">
             <div class="row input-group mb-3">
@@ -107,6 +117,7 @@
                         <thead>
                         <tr>
                             <th scope="col">#</th>
+                            <th scope="col">Application No</th>
                             <th scope="col">Event Type</th>
                             <th scope="col">Description</th>
                             <th scope="col">Fees</th>

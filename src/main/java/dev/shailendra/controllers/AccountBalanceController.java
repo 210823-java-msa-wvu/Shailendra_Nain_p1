@@ -35,17 +35,17 @@ public class AccountBalanceController implements FrontController{
                     case "POST": {
                         AccountBalance ab = om.readValue(request.getReader(), AccountBalance.class);
                         System.out.println("Creating a new account");
-                        response.getWriter().write(om.writeValueAsString(ab));
+                        response.getWriter().write(om.writeValueAsString(abs.createAccount(ab)));
                         break;
                     }
                 }
             }else {
                 int accountid = Integer.parseInt(path);
-
+                AccountBalance ab = null;
                 switch (request.getMethod()){
 
                     case "GET" : {
-                        AccountBalance ab = abs.searchAccountById(accountid);
+                        ab = abs.searchAccountById(accountid);
                         if(ab !=null){
                             response.getWriter().write(om.writeValueAsString(ab));
                         }else{
@@ -54,7 +54,8 @@ public class AccountBalanceController implements FrontController{
                         break;
                     }
                     case "PUT": {
-                        AccountBalance ab = om.readValue(request.getReader(), AccountBalance.class);
+                        ab = om.readValue(request.getReader(), AccountBalance.class);
+                        System.out.println("Balance Updated");
                             abs.updateApplication(ab);
                             response.setStatus(HttpServletResponse.SC_NO_CONTENT);
                             break;
@@ -70,6 +71,9 @@ public class AccountBalanceController implements FrontController{
                     }
                 }
             }
+//        }else{
+//            session.invalidate();
+//            response.sendRedirect("http://localhost:8080/home/static/index.html");
 //        }
 
     }

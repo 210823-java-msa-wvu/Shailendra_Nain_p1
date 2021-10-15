@@ -80,16 +80,16 @@ public class ApplicationHibernate implements ApplicationRepo {
 
     @Override
     public void delete(Integer id) {
-        Session s = HibernateUtil.getSession();
         Transaction tx = null;
-        try {
+
+        try (Session s = HibernateUtil.getSession()) {
             tx = s.beginTransaction();
             s.delete(id);
             tx.commit();
-        } catch (Exception e) {
-            if (tx != null) tx.rollback();
-        } finally {
-            s.close();
+        } catch (HibernateException e) {
+            e.printStackTrace();
+            if (tx != null)
+                tx.rollback();
         }
     }
 }

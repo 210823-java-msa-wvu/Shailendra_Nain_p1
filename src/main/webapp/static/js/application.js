@@ -136,6 +136,7 @@ function showAllUserRequest(appdata, data){
             showdata.appendChild(row);
          if(dat.user.id === data.id){
             let id = document.createElement('td');
+            let appno = document.createElement('td');
             let eventype = document.createElement('td');
             let description = document.createElement('td');
             let fees = document.createElement('td');
@@ -147,6 +148,7 @@ function showAllUserRequest(appdata, data){
             let status = document.createElement('td');
             id.setAttribute("scope","col");
             row.appendChild(id);
+            row.appendChild(appno);
             row.appendChild(eventype);
             row.appendChild(description);
             row.appendChild(fees);
@@ -157,6 +159,7 @@ function showAllUserRequest(appdata, data){
             row.appendChild(appjustification);
             row.appendChild(status);
             id.innerHTML = count++;
+            appno.innerHTML = dat.id;
             eventype.innerHTML = dat.eventype;
             description.innerHTML = dat.description;
             fees.innerHTML = `$${dat.fees}`;
@@ -390,16 +393,86 @@ async function approval(){
 }
 
 async function userAccount(){
+    let url = 'http://localhost:8080/home/user';
     let appUrl = 'http://localhost:8080/home/application';
     let acUrl = 'http://localhost:8080/home/account';
     let balance = document.getElementById('showBalance');
+    let userUrl = await fetch(url)
+    let userData = await userUrl.json()
+
+
     let appRes = await fetch(appUrl)
     let appData = await appRes.json()
 
     let acRes = await fetch(acUrl)
     let acData = await acRes.json()
-    balance.innerHTML = `Current Balance:$${acData[0].amount}`;
-    console.log(acData[0].amount);
-//    console.log(appData, acData);
-    console.log(appData[0].user.email);
+
+    console.log(userData.id);
+    console.log(acData);
+    let userArray = [];
+
+    let accountForm, id, userid, amount, awarded, pending ;
+    console.log(appData);
+    for(const ac of acData){
+       if(ac.user.id == userData.id){
+            userArray[0]=ac.id;
+            userArray[1] = ac.user.id;
+            userArray[2] = ac.amount;
+            userArray[3] = ac.awarded;
+            userArray[4] = ac.pending;
+       }
+    }
+    id = userArray[0];
+    userid = userArray[1];
+    amount = userArray[2];
+    awarded = userArray[3];
+    pending = userArray[4];
+    balance.innerHTML = `Current Balance:$${amount-pending}`;
+    for(app of appData){
+        if(userid == app.user.id){
+            pending += app.fees;
+        }
+    }
+        accountForm = {
+                    "user" : {
+                        "id" : userData.id
+                    },
+                    "amount": 1000,
+                    "awarded": 0,
+                    "pending": pending
+                }
+                console.log(accountForm);
+               let response = await fetch(`${acUrl}/${id}`, {
+               method: 'PUT',
+               body: JSON.stringify(accountForm),
+               headers: {
+                   'Content-Type': 'application/json'
+               }
+           })
+   //        let resJson = await response.
+           .then((response) => {
+               console.log(response);
+           }).catch((error) => {
+               console.log(error);
+           });
+
+
+    console.log(accountForm);
+    console.log(userArray.amount);
+}
+
+async function cancelRequest(){
+ let url = 'http://localhost:8080/home/application';
+   let userInput = document.getElementById('cancelNumber').valueAsNumber;
+
+
+     let response = await fetch(`${url}/${userInput}`, {
+                 method: 'DELETE'
+             })
+     //        let resJson = await response.
+             .then(() => {
+                 alert("Request Canceled");
+             }).catch((error) => {
+                 console.log(error);
+             });
 }

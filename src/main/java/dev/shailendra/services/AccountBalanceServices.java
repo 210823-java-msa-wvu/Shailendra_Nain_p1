@@ -33,7 +33,7 @@ public class AccountBalanceServices {
 
     public void updateApplication(AccountBalance ab) {
 
-        balanceRepo.update(ab);
+       balanceRepo.update(ab);
     }
 
     public void deleteAccount(Integer id) {

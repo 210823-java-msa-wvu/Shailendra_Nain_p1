@@ -17,7 +17,9 @@ public class ApplicationController implements FrontController {
 
     @Override
     public void process(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
-
+//        HttpSession session = request.getSession();
+//        String email = (String) session.getAttribute("email");
+//        if(email != null) {
             String path = (String) request.getAttribute("path");
             System.out.println("Path attribute: " + path);
 
@@ -73,6 +75,7 @@ public class ApplicationController implements FrontController {
                     }
 
                     case "DELETE": {
+                        System.out.println("Application Deleted...");
                         applicationServices.deleteApplication(applicationId);
                         response.setStatus(204);
                         break;
@@ -84,5 +87,9 @@ public class ApplicationController implements FrontController {
                     }
                 }
             }
+//        }else{
+//            session.invalidate();
+//            response.sendRedirect("http://localhost:8080/home/static/index.html");
+//        }
     }
 }
