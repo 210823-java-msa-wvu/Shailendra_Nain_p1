@@ -407,11 +407,11 @@ async function userAccount(){
     let acRes = await fetch(acUrl)
     let acData = await acRes.json()
 
-    console.log(userData.id);
+    console.log(userData);
     console.log(acData);
     let userArray = [];
 
-    let accountForm, id, userid, amount, awarded, pending ;
+    let accountForm, id, userid, amount, awarded, pending, currentPending, totalBalance;
     console.log(appData);
     for(const ac of acData){
        if(ac.user.id == userData.id){
@@ -427,46 +427,64 @@ async function userAccount(){
     amount = userArray[2];
     awarded = userArray[3];
     pending = userArray[4];
-    balance.innerHTML = `Current Balance:$${amount-pending}`;
+    balance.innerHTML = `Current Balance:$${amount}`;
+    currentPending = 0;
     for(app of appData){
         if(userid == app.user.id){
-            pending += app.fees;
+            currentPending += app.fees;
+            console.log(currentPending);
         }
     }
-        accountForm = {
-                    "user" : {
-                        "id" : userData.id
-                    },
-                    "amount": 1000,
-                    "awarded": 0,
-                    "pending": pending
-                }
-                console.log(accountForm);
-               let response = await fetch(`${acUrl}/${id}`, {
-               method: 'PUT',
-               body: JSON.stringify(accountForm),
-               headers: {
-                   'Content-Type': 'application/json'
-               }
-           })
-   //        let resJson = await response.
+    totalBalance =0;
+    totalBalance = amount - currentPending;
+
+        if(currentPending != pending ){
+            accountForm ={
+                "id": id,
+                "user" : {
+                "id" : userid,
+                "firstName": userData.firstName,
+                "lastName": userData.lastName,
+                "email": userData.email,
+                "userPass": userData.userPass,
+                "jobTitle": userData.jobTitle,
+                "departmentId": userData.departmentId
+            },
+                "amount": totalBalance,
+                "awarded": null,
+                "pending":currentPending
+            }
+            }
+            console.log(accountForm);
+           let response = await fetch(`${acUrl}/${id}`, {
+           method: 'PUT',
+           body: JSON.stringify(accountForm),
+           headers: {
+               'Content-Type': 'application/json'
+           }
+       })
+//           let resJson = await response.
            .then((response) => {
                console.log(response);
            }).catch((error) => {
                console.log(error);
            });
 
+console.log(accountForm);
 
+
+
+    console.log(userArray);
     console.log(accountForm);
-    console.log(userArray.amount);
 }
 
 async function cancelRequest(){
  let url = 'http://localhost:8080/home/application';
    let userInput = document.getElementById('cancelNumber').valueAsNumber;
+    let cUrl = await fetch(url)
+    let cData = await cUrl.json()
 
-
-     let response = await fetch(`${url}/${userInput}`, {
+     let response = await fetch(`${cData}/${userInput}`, {
                  method: 'DELETE'
              })
      //        let resJson = await response.
